@@ -14,6 +14,7 @@ genai.configure(api_key=API_KEY)
 
 async def ask_llm(request: LLMRequest) -> LLMResponse:
     try:
+
         model = genai.GenerativeModel('gemini-2.5-flash')
         response = model.generate_content(request.question)
 
