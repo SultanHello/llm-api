@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from app.schemas.llm_schema import LLMRequest, LLMResponse, Usage
 
 load_dotenv()
-API_KEY = os.getenv("OPENAI_API_KEY")
+API_KEY = os.getenv("GEMINI_API_KEY")
 
 if not API_KEY:
     raise ValueError("GEMINI_API_KEY not found in environment variables")

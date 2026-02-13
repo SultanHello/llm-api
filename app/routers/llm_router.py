@@ -5,13 +5,28 @@ from starlette import status
 
 from app.schemas.llm_schema import LLMRequest, LLMResponse
 from app.services.llm_service import ask_llm
-
+from fastapi import HTTPException
 router = APIRouter(tags=["LLM"])
 
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 @router.post("/generate", response_model=LLMResponse)
 async def generate(request: LLMRequest):
-    return await ask_llm(request)
+    try:
+        response = await ask_llm(request)
+        return response
+
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception:
+        logger.exception("LLM generation failed")
+        raise HTTPException(
+            status_code=500,
+            detail="LLM service temporarily unavailable"
+        )
 
 
 @router.get("/health", status_code=status.HTTP_200_OK)
