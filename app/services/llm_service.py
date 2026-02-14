@@ -1,6 +1,5 @@
 import os
 import time
-from typing import Any, Coroutine
 
 from dotenv import load_dotenv
 from google import genai
@@ -29,7 +28,7 @@ def _get_client() -> genai.Client:
     return _client
 
 
-async def ask_llm(request: LLMRequest) -> LLMResponse:
+async def ask_llm(request: LLMRequest) -> LLMResponse | None:
     client = _get_client()
 
     start = time.perf_counter()
