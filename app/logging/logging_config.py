@@ -6,10 +6,11 @@ from datetime import datetime, timezone
 class JsonFormatter(logging.Formatter):
     def format(self, record):
         log_record = {
-            "@timestamp": datetime.now(timezone.utc).isoformat(),
+            "@timestamp": datetime.utcnow().replace(microsecond=0).isoformat() + "Z",
             "level": record.levelname,
             "message": record.getMessage(),
             "logger": record.name,
+            "service": "fastapi-llm"
         }
 
         return json.dumps(log_record)
